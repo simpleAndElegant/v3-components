@@ -2,24 +2,31 @@ const path = require('path');
 
 const resolve = (filePath) => path.join(__dirname, './', filePath);
 
+
 module.exports = {
   outputDir: 'docs',
   publicPath: '/v3-components/',
-  devServer: { port: '3366' },
   pages: {
     index: {
       entry: resolve('story/main.ts'),
       template: 'public/index.html',
       filename: 'index.html',
-      title: 'v3-components',
+      title: '组件示例',
     },
   },
-  chainWebpack: (config) => {
+  chainWebpack: config => {
     config.plugins
       .delete('prefetch-index')
       .delete('preload-index');
     config.resolve.alias
-      .set('story', resolve('story'));
+      .set('story', resolve('story'))
+      .set('src', resolve('src'))
   },
-
-};
+  css: {
+      loaderOptions: {
+          sass: {
+              prependData: `@import "src/style/global-import.scss";`
+          },
+      }
+  },
+}
