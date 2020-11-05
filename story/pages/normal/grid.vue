@@ -1,10 +1,10 @@
 <template>
-    demo color
+    demo grid
 </template>
 
 <script>
     export default {
-        name: "color"
+        name: "grid"
     }
 </script>
 

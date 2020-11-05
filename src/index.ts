@@ -1,8 +1,11 @@
 import { App } from 'vue';
 import Input from './packages/input';
+import Button from './packages/button';
+
 
 const plugins = [
   Input,
+  Button
 ];
 
 function install(app: App) {
@@ -15,5 +18,6 @@ export default {
 
 export {
   Input,
+  Button,
   install,
 };

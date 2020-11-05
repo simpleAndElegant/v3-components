@@ -1,5 +1,5 @@
 {
-  "name": "v3-components-wsj",
+  "name": "v3-components",
   "version": "0.1.1",
   "private": false,
   "main": "dist/index.js",

@@ -5,7 +5,10 @@ import designComponent from '../../use/designComponent';
 export default designComponent({
   name: 'pl-input',
   props: {
-    status: { type: String, default: 'primary' },
+    status: { 
+      type: String, 
+      default: 'primary' 
+    },
   },
   setup(props) {
     const modelValue = ref('');
