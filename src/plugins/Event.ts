@@ -3,6 +3,7 @@ import { SimpleFunction } from 'src/shims'
 type ListenName = string | symbol
 type Listener = (SimpleFunction & { fn? : any})
 
+export type PlainEvent = ReturnType<typeof createPlainEvent>
 
 
 
@@ -66,4 +67,6 @@ export function createPlainEvent (){
       return () => event.off(listenName, on)
     },
   }
+
+  return event
 }

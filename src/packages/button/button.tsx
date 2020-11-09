@@ -15,7 +15,10 @@ export default designComponent({
             type: String
         }
     },
-    setup(props, setupContext) {
+    emits: {
+        click: (e: MouseEvent) => true
+    },
+    setup({props, event, setupContext}) {
 
         const classes = computed(() => [
             'pl-button',
@@ -25,7 +28,7 @@ export default designComponent({
         return {
             render: () => {
                 return (
-                    <button class={classes.value}>
+                    <button class={classes.value} onClick={event.emit.click}>
                         {!setupContext.slots.default ? props.label : setupContext.slots.default()}
                     </button>
                 )

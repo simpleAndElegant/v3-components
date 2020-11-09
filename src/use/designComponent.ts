@@ -6,35 +6,43 @@ import {
   defineComponent, getCurrentInstance, provide, inject,
 } from 'vue';
 
+import {ComponentEvent, getComponentEmit, useEvent} from "./useEvent";
+
+
+
 export default function designComponent <
   PropsOptions extends Readonly<ComponentPropsOptions>,
   Props extends Readonly<ExtractPropTypes<PropsOptions>>,
+  Emits extends { [k: string]: (...args: any[]) => boolean },
   Refer
 >(
   options: {
     name?: string,
     props?: PropsOptions,
     provideRefer?: boolean,
-    setup: (props: Props, setupContext: SetupContext) => {
-        refer?: Refer,
-        render: () => any
-    }
+    emits?: Emits,
+    setup: (parameter: { props: Props, event: ComponentEvent<Emits>, setupContext: SetupContext<Emits> }) => {
+      refer?: Refer,
+      render: () => any
+  }
 },
 ) {
-  const { setup, provideRefer, props, name } = options;
+  const { setup, provideRefer, props, name, emits } = options;
   return {
     ...defineComponent({
       props,
       name,
-      setup(props: Props, setupContext: SetupContext) {
-        const ctx = getCurrentInstance() as any;
+      setup(props: Props, setupContext: any) {
+        const ctx = getCurrentInstance()!;
+        const event = useEvent<Emits>(emits!)
+
 
         if (!setup) {
           console.error('designComponent: setup is required!');
           return () => null;
         }
 
-        const { refer, render } = setup(props, setupContext);
+        const {refer, render} = setup({props, event, setupContext})
         if (!!refer) {
           const duplicateKey = Object.keys(props || {})
               .find(i => Object.prototype.hasOwnProperty.call(refer as any, i))
